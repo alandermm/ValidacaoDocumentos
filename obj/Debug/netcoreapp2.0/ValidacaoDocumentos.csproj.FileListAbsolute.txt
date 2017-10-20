@@ -1,0 +1,10 @@
+C:\Users\alander\CodeXP\ValidacaoDocumentos\obj\Debug\netcoreapp2.0\ValidacaoDocumentos.csproj.CoreCompileInputs.cache
+C:\Users\alander\CodeXP\ValidacaoDocumentos\obj\Debug\netcoreapp2.0\ValidacaoDocumentos.AssemblyInfoInputs.cache
+C:\Users\alander\CodeXP\ValidacaoDocumentos\obj\Debug\netcoreapp2.0\ValidacaoDocumentos.AssemblyInfo.cs
+C:\Users\alander\CodeXP\ValidacaoDocumentos\bin\Debug\netcoreapp2.0\ValidacaoDocumentos.deps.json
+C:\Users\alander\CodeXP\ValidacaoDocumentos\bin\Debug\netcoreapp2.0\ValidacaoDocumentos.runtimeconfig.json
+C:\Users\alander\CodeXP\ValidacaoDocumentos\bin\Debug\netcoreapp2.0\ValidacaoDocumentos.runtimeconfig.dev.json
+C:\Users\alander\CodeXP\ValidacaoDocumentos\bin\Debug\netcoreapp2.0\ValidacaoDocumentos.dll
+C:\Users\alander\CodeXP\ValidacaoDocumentos\bin\Debug\netcoreapp2.0\ValidacaoDocumentos.pdb
+C:\Users\alander\CodeXP\ValidacaoDocumentos\obj\Debug\netcoreapp2.0\ValidacaoDocumentos.dll
+C:\Users\alander\CodeXP\ValidacaoDocumentos\obj\Debug\netcoreapp2.0\ValidacaoDocumentos.pdb
