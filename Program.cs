@@ -17,7 +17,7 @@ namespace ValidacaoDocumentos
         static string tempdoc;
         static int soma = 0, resto = 0;
         static Regex rgx = new Regex(@"^\d*$");
-        static Regex rgxRG = new Regex(@"^\d+?(x|X|\d+$");
+        static Regex rgxRG = new Regex(@"^\d+?(x|X|\d)+$");
 
         static string primeiroDigito, segundoDigito;
         static void Main(string[] args) {
@@ -28,7 +28,9 @@ namespace ValidacaoDocumentos
                         + "2 - Validar CNPJ\n"
                         + "3 - Validar Cartão de Crétido\n"
                         + "4 - Validar RG\n"
-                        + "5 - Validar Título Eleitoral\n0 - Sair");
+                        + "5 - Validar Título Eleitoral\n"
+                        + "0 - Sair\n");
+                Console.Write("Opção: ");
                 int opt = 0;            
                 do{
                     op2 = Console.ReadLine();
@@ -56,14 +58,14 @@ namespace ValidacaoDocumentos
             primeiroDigito = validarDigito(chaveTitulo, 5);
             //Console.WriteLine(primeiroDigito);
             if(primeiroDigito != doc.Substring(8,1)){
-                Console.WriteLine("Título Eleitoral inválido!");
+                Console.WriteLine("Título Eleitoral inválido!\n");
             } else {
                 segundoDigito = validarDigito(chaveTitulo2, 6);
                 int uf = Int16.Parse(doc.Substring(6, 2));
                 if(doc.EndsWith(segundoDigito) && (uf > 0 && uf <= 28)){
-                    Console.WriteLine("Titulo Eleitoral válido!");
+                    Console.WriteLine("Titulo Eleitoral válido!\n");
                 } else {
-                    Console.WriteLine("Título Eleitoral inválido!");
+                    Console.WriteLine("Título Eleitoral inválido!\n");
                 }
             }
         }
@@ -72,16 +74,15 @@ namespace ValidacaoDocumentos
             do{
                 Console.Write("Digite o RG: ");
                 doc = limparCaracteresDocumento(Console.ReadLine());
-                //doc = limpaCaracteresDocumento(doc);
             } while (doc.Length != 9 || !rgxRG.IsMatch(doc));
 
             primeiroDigito = validarDigito(chaveRG, 4);
             if(doc.ToUpper().EndsWith(primeiroDigito)){
                 Console.Clear();
-                Console.WriteLine("RG válido!");
+                Console.WriteLine("RG válido!\n");
             } else{
                 Console.Clear();
-                Console.WriteLine("RG inválido!");
+                Console.WriteLine("RG inválido!\n");
             }
         }
 
@@ -94,9 +95,9 @@ namespace ValidacaoDocumentos
             primeiroDigito = validarDigito(chaveCredito, 3);
 
             if(doc.EndsWith(primeiroDigito)){
-                Console.WriteLine("Cartão válido!");
+                Console.WriteLine("Cartão válido!\n");
             } else {
-                Console.WriteLine("Cartão inválido!");
+                Console.WriteLine("Cartão inválido!\n");
             }
         }
 
@@ -109,13 +110,13 @@ namespace ValidacaoDocumentos
             primeiroDigito = validarDigito(chaveCNPJ, 2);
 
             if(primeiroDigito != doc.Substring(12, 1)){
-                Console.WriteLine("CNPJ inválido!");
+                Console.WriteLine("CNPJ inválido!\n");
             }else {
                 segundoDigito = validarDigito(chaveCNPJ2, 2);
                 if(doc.EndsWith(segundoDigito)){
-                    Console.WriteLine("CNPJ válido!");
+                    Console.WriteLine("CNPJ válido!\n");
                 } else {
-                    Console.WriteLine("CNPJ inválido!");
+                    Console.WriteLine("CNPJ inválido!\n");
                 }
             }
         }
@@ -131,12 +132,16 @@ namespace ValidacaoDocumentos
             }
 
             for(int i = 0; i < chave.Length; i++){
-                if(tipoDoc == 3){
-                    soma += ((int)Char.GetNumericValue(tempdoc[i]) * chave[i] - 9);
-                } else {
+                if(tipoDoc > 0 && tipoDoc <= 6 && tipoDoc != 3){
                     soma += ((int)Char.GetNumericValue(tempdoc[i]) * chave[i]);
-                }
+                }else if(tipoDoc == 3){
+                    if((int)Char.GetNumericValue(tempdoc[i]) * chave[i] > 9)        
+                        soma += ((int)Char.GetNumericValue(tempdoc[i]) * chave[i] - 9);
+                    } else {
+                        soma += ((int)Char.GetNumericValue(tempdoc[i]) * chave[i]);
+                    }
             }
+            
 
             if(tipoDoc > 0 || tipoDoc <= 6 && tipoDoc != 3 ){
                 resto = soma % 11;
@@ -164,10 +169,6 @@ namespace ValidacaoDocumentos
             }
         }
 
-        private static string limparCaracteresDocumento(string doc){
-            return doc.Replace("/","").Replace("-","").Replace(".","");
-        }
-
         private static void validarCPF(){
             do{
                 Console.Write("Digite o CPF: ");
@@ -177,56 +178,19 @@ namespace ValidacaoDocumentos
             primeiroDigito = validarDigito(chaveCPF, 1);
 
             if(primeiroDigito != doc.Substring(9, 1)){
-                Console.WriteLine("CPF inválido!");
+                Console.WriteLine("CPF inválido!\n");
             } else {
                 segundoDigito = validarDigito(chaveCPF2, 1);
                 if(doc.EndsWith(segundoDigito)){
-                    Console.WriteLine("CPF válido!");
+                    Console.WriteLine("CPF válido!\n");
                 } else {
-                    Console.WriteLine("CPF inválido!");
+                    Console.WriteLine("CPF inválido!\n");
                 }
             }
         }
+
+        private static string limparCaracteresDocumento(string doc){
+            return doc.Replace("/","").Replace("-","").Replace(".","");
+        }
     }
 }
-
-/*Console.Write("Digite o CNPJ: ");
-string cnpj = Console.ReadLine().Replace("/","").Replace("-","").Replace(".","");
-
-tempdoc = cnpj.Substring(0, 12);
-
-for(int i = 0; i < 12; i++){
-    soma += ((int)Char.GetNumericValue(tempdoc[i]) * chaveCNPJ[i]);
-}
-
-resto = soma % 11;
-
-if (resto < 2){
-    primeiroDigito = "0";
-} else {
-    resto = 11 - resto;
-    primeiroDigito = resto.ToString();
-}
-
-soma = 0;
-
-tempdoc = tempdoc + primeiroDigito;
-
-for(int i = 0; i < 13; i++){
-    soma += ((int)Char.GetNumericValue(tempdoc[i]) * chaveCNPJ2[i]);
-}
-
-resto = soma % 11;
-
-if(resto < 2){
-    segundoDigito = "0";
-} else {
-    resto = 11 - resto;
-    segundoDigito = resto.ToString();
-}
-
-if(cnpj.EndsWith(primeiroDigito + segundoDigito)){
-    Console.WriteLine("O CNPJ é Válido!");
-} else {
-    Console.WriteLine("O CNPJ é Inválido!");
-}*/
